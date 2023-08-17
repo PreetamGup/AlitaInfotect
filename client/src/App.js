@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import PersonForm from './pages/PersonForm';
+import ImageGallery from './pages/ImageGallery';
 
 
 function App() {
@@ -25,6 +26,15 @@ function App() {
           element={
             <ProtedtedRoute>        
               <PersonForm/>
+            </ProtedtedRoute>
+          }
+        />
+
+        <Route
+          path="/imagegallery"
+          element={
+            <ProtedtedRoute>        
+              <ImageGallery/>
             </ProtedtedRoute>
           }
         />

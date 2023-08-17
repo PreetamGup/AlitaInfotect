@@ -4,6 +4,10 @@ const cors = require("cors")
 const userModel = require("./model/userModel")
 const personModel= require("./model/personModel")
 const jwt = require('jsonwebtoken')
+const multer = require('multer');
+const path = require('path');
+const fs= require('fs')
+const authmiddlware = require('./middleware/authmiddleware')
 
 // mongoDB connection
 connectDB();
@@ -89,7 +93,7 @@ app.post("/api/register", async(req, res)=>{
       }
 })
 
-app.post('/api/addperson',async(req, res)=>{
+app.post('/api/addperson',authmiddlware,async(req, res)=>{
 
      try{
         const newUser = new personModel(req.body);
@@ -107,7 +111,7 @@ app.post('/api/addperson',async(req, res)=>{
       }
 })
 
-app.get('/api/alldata',async(req, res)=>{
+app.get('/api/alldata',authmiddlware,async(req, res)=>{
 
     try {
         const allPerson= await personModel.find({});
@@ -130,7 +134,7 @@ app.get('/api/alldata',async(req, res)=>{
 })
 
 
-app.delete("/api/person/:id",async(req, res)=>{
+app.delete("/api/person/:id",authmiddlware,async(req, res)=>{
     try {  
         await personModel.findByIdAndDelete(req.params.id)
         res.status(200).json({
@@ -146,6 +150,28 @@ app.delete("/api/person/:id",async(req, res)=>{
     
     }
 })
+
+const storage = multer.diskStorage({
+    destination: './client/src/UploadImages',
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    },
+  });
+  
+  const upload = multer({ storage });
+
+  
+  app.post('/api/upload', upload.array('images', 100), (req, res) => {
+    const uploadedFiles = req.files.map((file) => file.filename);
+    res.json(uploadedFiles);
+    
+  });
+
+  app.get("/api/all", (req, res)=>{
+    const Images = fs.readdirSync("./client/src/UploadImages").map((file)=> file)
+    res.json(Images)
+  })
 
 
 

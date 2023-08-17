@@ -1,11 +1,12 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios';
 import Navbar from '../component/Navbar';
+import {useNavigate} from 'react-router-dom'
 
 const HomePage = () => {
   const [allPerson, setallPerson]= useState([]);
 
-
+  const navigate= useNavigate();
 
  async function handleDelete(id){
   
@@ -36,6 +37,11 @@ const HomePage = () => {
     if(res.data.success){
       setallPerson(res.data.allPerson)
       console.log(res.data.allPerson)
+    }else{
+      if(res.data.message==="token expired"){
+        localStorage.clear('token')
+        navigate("/login")
+      }
     }
 
 
