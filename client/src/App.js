@@ -1,6 +1,9 @@
 import LoginForm from './pages/Login';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from './pages/HomePage';
+import PersonForm from './pages/PersonForm';
+
 
 function App() {
   return (
@@ -12,7 +15,16 @@ function App() {
           exact
           element={
             <ProtedtedRoute>
-              {/* <HomePage /> */}
+              <HomePage />
+            </ProtedtedRoute>
+          }
+        />
+
+        <Route
+          path="/addperson"
+          element={
+            <ProtedtedRoute>        
+              <PersonForm/>
             </ProtedtedRoute>
           }
         />

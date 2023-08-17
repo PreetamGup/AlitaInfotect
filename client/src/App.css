@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  text-align: center;
 }
 
 
@@ -12,14 +13,88 @@
 }
 
 
-.form{
+/* .form{
   border: 2px solid black;
   border-radius: 10px;
   background-color: beige;
   width: 300px;
   padding: 10px;
-  /* position: relative; */
-  /* top: 100px; */
-  
+
  
+} */
+
+
+
+/* styles.css */
+
+.app-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.personCard{
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: chartreuse;
+}
+
+.Navbar{
+  position: absolute;
+  top: 5px;
+ 
+}
+
+.Navbar a{
+  text-decoration: none;
+  color: black;
+  
+  background-color: #eb8938;
+  /* background-color: ; */
+}
+
+.Navbar a:hover{
+  background-color: blue;
+  color: #f9f9f9;
+  /* background-color: ; */
 }

@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require("cors")
 const userModel = require("./model/userModel")
+const personModel= require("./model/personModel")
 const jwt = require('jsonwebtoken')
 
 // mongoDB connection
@@ -87,6 +88,66 @@ app.post("/api/register", async(req, res)=>{
         });
       }
 })
+
+app.post('/api/addperson',async(req, res)=>{
+
+     try{
+        const newUser = new personModel(req.body);
+        await newUser.save();
+        res.status(201).send({
+          message: "Added Successfully",
+          success: true,
+        });
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          success: false,
+          message: `Person adding Controller ${error.message}`,
+        });
+      }
+})
+
+app.get('/api/alldata',async(req, res)=>{
+
+    try {
+        const allPerson= await personModel.find({});
+        console.log(allPerson)
+
+        res.status(200).json({
+            message: "Fetch Success",
+            success: true,
+            allPerson,
+        })
+        
+    } catch (error) {
+        res.status(404).send({
+            success: false,
+            message: `Fetchin error ${error.message}`,
+        })
+    }
+
+   
+})
+
+
+app.delete("/api/person/:id",async(req, res)=>{
+    try {  
+        await personModel.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            message:"Person deleted",
+            success:true
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            message:'Some error',
+            success:false
+        })
+    
+    }
+})
+
+
 
 // listen port
 const port = 8080;
