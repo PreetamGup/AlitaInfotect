@@ -1,9 +1,12 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const navigate= useNavigate();
 
   const validateForm = () => {
     let errorMessage={}
@@ -21,12 +24,27 @@ const LoginForm = () => {
     return Object.keys(errorMessage).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (validateForm()) {
+
+        try {
+            const response = await axios.post('/api/login',{username,password});
+
+            if(response.data.success){
+                localStorage.setItem('token',response.data.token);
+                window.alert('Login Successfully');
+                navigate('/')
+              }else{
+                console.error(response.data.message);
+              }
+        } catch (error) {
+            console.log(error);
+            window.alert('something went wrong');
+        }
      
-      console.log('Submitting login request:', username, password);
+       
     }
   };
 
